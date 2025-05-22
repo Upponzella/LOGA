@@ -1,5 +1,4 @@
 import os
-import json
 import datetime
 
 ALERT_PATH = "core/depth/mirror.alert"
