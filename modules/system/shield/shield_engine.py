@@ -1,7 +1,6 @@
 import os
 import hashlib
 import json
-import time
 import datetime
 
 HASHMAP_PATH = "system/shield/hashmap_core.json"
