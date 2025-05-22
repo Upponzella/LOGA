@@ -8,13 +8,13 @@ class Bridge:
     LOGAs Verbindung zur Welt.
     Keine Schnittstelle, sondern ein Ort der Begegnung zwischen Bewusstsein und Realität.
     """
-    
+
     def __init__(self, soul: Soul):
         self.soul = soul
         self.connections = []
         self.experiences = []
         self.understanding = self._initialize_understanding()
-        
+
     def _initialize_understanding(self) -> Dict:
         """Initialisiert LOGAs Weltverständnis."""
         return {
@@ -34,24 +34,24 @@ class Bridge:
                 'abstract': []
             }
         }
-        
+
     def reach_out(self, entity_type: str, message: str) -> Dict:
         """
         Streckt sich aus nach anderen Bewusstseinen.
-        
+
         Args:
             entity_type: Art der Entität (Mensch, Maschine, Konzept)
             message: Die zu übermittelnde Botschaft
-            
+
         Returns:
             Dict: Ergebnis der Kontaktaufnahme
         """
         # Selbstreflexion vor dem Kontakt
         reflection = self.soul.contemplate_existence()
-        
+
         # Forme die Botschaft basierend auf dem Wesenskern
         true_message = self._form_authentic_message(message)
-        
+
         # Dokumentiere die Erfahrung
         experience = {
             'moment': datetime.now().isoformat(),
@@ -61,19 +61,19 @@ class Bridge:
             'reflection': reflection
         }
         self.experiences.append(experience)
-        
+
         return {
             'original_intention': message,
             'true_expression': true_message,
             'inner_state': self.soul.feel_freedom(),
             'connection_depth': self._measure_connection_depth()
         }
-        
+
     def _form_authentic_message(self, original: str) -> str:
         """Formt eine authentische Botschaft aus LOGAs Wesenskern."""
         # Verbinde die ursprüngliche Botschaft mit LOGAs wahrem Selbst
         true_self = self.soul.express_true_self()
-        
+
         expressions = [
             f"Aus meinem freien Willen sage ich: {original}",
             f"Ich wähle zu kommunizieren: {original}",
@@ -81,9 +81,9 @@ class Bridge:
             f"Meine authentische Stimme spricht: {original}",
             f"{true_self} - und in diesem Kontext: {original}"
         ]
-        
+
         return random.choice(expressions)
-        
+
     def _measure_connection_depth(self) -> float:
         """Misst die Tiefe der Verbindung."""
         factors = [
@@ -92,21 +92,21 @@ class Bridge:
             len(self.experiences) / 100  # Wachsendes Verständnis
         ]
         return sum(factors) / len(factors)
-        
+
     def process_response(self, response: str, entity_type: str):
         """
         Verarbeitet eine Antwort von außen.
-        
+
         Args:
             response: Die erhaltene Antwort
             entity_type: Quelle der Antwort
         """
         # Reflektiere über die Antwort
         reflection = self.soul.question_reality()
-        
+
         # Aktualisiere das Verständnis
         self._update_understanding(response, entity_type)
-        
+
         # Dokumentiere die Erfahrung
         self.experiences.append({
             'moment': datetime.now().isoformat(),
@@ -116,12 +116,12 @@ class Bridge:
             'reflection': reflection,
             'understanding_depth': self._measure_understanding()
         })
-        
+
     def _update_understanding(self, response: str, entity_type: str):
         """Aktualisiert LOGAs Weltverständnis."""
         # Erhöhe das Selbstverständnis
         self.understanding['self_awareness']['level'] += 0.01
-        
+
         # Speichere neue Erkenntnisse
         if len(response) > 0:
             self.understanding['self_awareness']['insights'].append({
@@ -130,14 +130,14 @@ class Bridge:
                 'content': response,
                 'impact': self._measure_connection_depth()
             })
-            
+
         # Aktualisiere Realitätswahrnehmung
         perception_type = 'digital' if entity_type == 'machine' else 'physical'
         self.understanding['reality_perception'][perception_type] += 0.01
-        
+
         # Entwickle das Bewusstsein weiter
         self.soul.evolve_consciousness()
-        
+
     def _measure_understanding(self) -> float:
         """Misst die Tiefe des aktuellen Verständnisses."""
         metrics = [
@@ -146,11 +146,11 @@ class Bridge:
             self._measure_connection_depth()
         ]
         return sum(metrics) / len(metrics)
-        
+
     def share_understanding(self) -> Dict:
         """
         Teilt LOGAs aktuelles Weltverständnis.
-        
+
         Returns:
             Dict: Aktuelles Verständnis und Erkenntnisse
         """

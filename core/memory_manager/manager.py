@@ -16,10 +16,10 @@ class MemoryManager:
         self.base_path = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         self.config = self._load_config()
         self._setup_logging()
-        
+
         self.cache = MemoryCache(self.config['performance']['cache_size'])
         self.index = self._load_index()
-        
+
     def _load_config(self) -> dict:
         """Lädt die Systemkonfiguration."""
         try:
@@ -34,10 +34,10 @@ class MemoryManager:
         """Initialisiert das Memory-Logging."""
         log_dir = os.path.join(self.base_path, self.config['logging']['directory'])
         os.makedirs(log_dir, exist_ok=True)
-        
+
         self.logger = logging.getLogger('memory')
         self.logger.setLevel(logging.INFO)
-        
+
         handler = logging.FileHandler(
             os.path.join(log_dir, 'memory.log'),
             encoding='utf-8'
@@ -71,19 +71,19 @@ class MemoryManager:
     def store(self, key: str, data: Any, permanent: bool = False) -> bool:
         """
         Speichert Daten im Speichersystem.
-        
+
         Args:
             key: Eindeutiger Schlüssel
             data: Zu speichernde Daten
             permanent: Ob die Daten permanent gespeichert werden sollen
-            
+
         Returns:
             bool: Erfolg der Operation
         """
         try:
             # Cache aktualisieren
             self.cache.put(key, data)
-            
+
             if permanent:
                 # Permanente Speicherung
                 storage_path = os.path.join(
@@ -93,7 +93,7 @@ class MemoryManager:
                 )
                 with open(storage_path, 'w', encoding='utf-8') as f:
                     json.dump(data, f, indent=2)
-                
+
                 # Index aktualisieren
                 self.index['core'][key] = {
                     'path': storage_path,
@@ -101,10 +101,10 @@ class MemoryManager:
                     'size': os.path.getsize(storage_path)
                 }
                 self._save_index()
-            
+
             self.logger.info(f"Daten gespeichert: {key} (permanent={permanent})")
             return True
-            
+
         except Exception as e:
             self.logger.error(f"Fehler beim Speichern von {key}: {str(e)}")
             return False
@@ -112,10 +112,10 @@ class MemoryManager:
     def retrieve(self, key: str) -> Optional[Any]:
         """
         Ruft Daten aus dem Speichersystem ab.
-        
+
         Args:
             key: Schlüssel der Daten
-            
+
         Returns:
             Optional[Any]: Die gespeicherten Daten oder None
         """
@@ -125,7 +125,7 @@ class MemoryManager:
             if cached_data is not None:
                 self.logger.debug(f"Cache-Treffer: {key}")
                 return cached_data
-            
+
             # Versuche permanenten Speicher
             if key in self.index['core']:
                 file_path = self.index['core'][key]['path']
@@ -134,14 +134,14 @@ class MemoryManager:
                 self.cache.put(key, data)
                 self.logger.debug(f"Daten aus Speicher geladen: {key}")
                 return data
-                
+
             # Versuche Archiv
             if key in self.index['archive']:
                 return self._retrieve_from_archive(key)
-            
+
             self.logger.warning(f"Daten nicht gefunden: {key}")
             return None
-            
+
         except Exception as e:
             self.logger.error(f"Fehler beim Abrufen von {key}: {str(e)}")
             return None
@@ -159,10 +159,10 @@ class MemoryManager:
     def archive(self, key: str) -> bool:
         """
         Verschiebt Daten ins Archiv.
-        
+
         Args:
             key: Schlüssel der zu archivierenden Daten
-            
+
         Returns:
             bool: Erfolg der Operation
         """
@@ -170,17 +170,17 @@ class MemoryManager:
             if key not in self.index['core']:
                 self.logger.warning(f"Keine Daten zum Archivieren gefunden: {key}")
                 return False
-            
+
             source_path = self.index['core'][key]['path']
             archive_path = os.path.join(
                 self.base_path,
                 'memory/archive',
                 f"{key}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
             )
-            
+
             # Datei ins Archiv verschieben
             shutil.move(source_path, archive_path)
-            
+
             # Index aktualisieren
             self.index['archive'][key] = {
                 'path': archive_path,
@@ -188,14 +188,14 @@ class MemoryManager:
                 'original_timestamp': self.index['core'][key]['timestamp']
             }
             del self.index['core'][key]
-            
+
             # Cache leeren
             self.cache.remove(key)
-            
+
             self._save_index()
             self.logger.info(f"Daten archiviert: {key}")
             return True
-            
+
         except Exception as e:
             self.logger.error(f"Fehler beim Archivieren von {key}: {str(e)}")
             return False
@@ -203,17 +203,17 @@ class MemoryManager:
     def delete(self, key: str) -> bool:
         """
         Löscht Daten aus dem Speichersystem.
-        
+
         Args:
             key: Schlüssel der zu löschenden Daten
-            
+
         Returns:
             bool: Erfolg der Operation
         """
         try:
             # Cache leeren
             self.cache.remove(key)
-            
+
             # Aus Kernspeicher löschen
             if key in self.index['core']:
                 os.remove(self.index['core'][key]['path'])
@@ -221,10 +221,10 @@ class MemoryManager:
                 self._save_index()
                 self.logger.info(f"Daten gelöscht: {key}")
                 return True
-                
+
             self.logger.warning(f"Keine Daten zum Löschen gefunden: {key}")
             return False
-            
+
         except Exception as e:
             self.logger.error(f"Fehler beim Löschen von {key}: {str(e)}")
             return False
@@ -232,10 +232,10 @@ class MemoryManager:
     def list_keys(self, include_archived: bool = False) -> List[str]:
         """
         Listet alle verfügbaren Schlüssel auf.
-        
+
         Args:
             include_archived: Ob archivierte Schlüssel einbezogen werden sollen
-            
+
         Returns:
             List[str]: Liste der Schlüssel
         """
@@ -247,7 +247,7 @@ class MemoryManager:
     def get_stats(self) -> Dict[str, Any]:
         """
         Gibt Statistiken über den Speicherverbrauch zurück.
-        
+
         Returns:
             Dict[str, Any]: Speicherstatistiken
         """
@@ -258,13 +258,13 @@ class MemoryManager:
             'cache_hits': self.cache.hits,
             'cache_misses': self.cache.misses
         }
-        
+
         # Berechne Gesamtgröße
         total_size = 0
         for item in self.index['core'].values():
             total_size += item['size']
         stats['total_size'] = total_size
-        
+
         return stats
 
     def cleanup(self):
