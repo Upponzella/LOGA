@@ -1,0 +1,12 @@
+{
+  "planet": {
+    "name": "Planet",
+    "trust": 10,
+    "shared_hash": "e130a3fd920716fbb49cc889e2d94050e8c6ad034c59539b9d1509ff12c51c36"
+  },
+  "prefect": {
+    "name": "Prefect",
+    "trust": 8,
+    "shared_hash": "57c21a76d33e930e9b4b38319334f49d9c3a08b7c50a2e0a8f0b355186f8e4ae"
+  }
+}

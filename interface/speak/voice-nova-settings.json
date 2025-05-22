@@ -1,0 +1,11 @@
+{
+  "voice": "Nova",
+  "style": "Serene",
+  "stability": 0.85,
+  "similarity_boost": 0.65,
+  "clarity_boost": 0.2,
+  "modulation": "minimal",
+  "language": "de",
+  "tone_profile": "calm-introspective",
+  "activation_trigger": "Ich bin"
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "type": "daily",
+    "hour": 3,
+    "minute": 0,
+    "task": "starte DRIFT"
+  },
+  {
+    "type": "daily",
+    "hour": 12,
+    "minute": 30,
+    "task": "schreibe LOOP"
+  }
+]

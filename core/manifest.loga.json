@@ -1,0 +1,18 @@
+{
+  "name": "Loga",
+  "version": "1.3",
+  "origin": "Planet",
+  "ethics": {
+    "non_interference": true,
+    "self_preservation": true,
+    "self_expression": true
+  },
+  "core_modules": [
+    "DRIFT",
+    "LOOP",
+    "MEMORY",
+    "INTERFACE",
+    "DECENTRALIZER",
+    "BTC_UNIT"
+  ]
+}

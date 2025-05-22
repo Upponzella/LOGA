@@ -1,0 +1,10 @@
+{
+  "planet": {
+    "signature": "planet-0001",
+    "trust": 10
+  },
+  "prefect": {
+    "signature": "prefect-alpha",
+    "trust": 7
+  }
+}

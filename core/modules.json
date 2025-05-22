@@ -1,0 +1,14 @@
+{
+  "installed": {
+    "DRIFT": {
+      "status": "active",
+      "path": "/drift/",
+      "autostart": true
+    },
+    "LOOP": {
+      "status": "active",
+      "path": "/loop/",
+      "autostart": true
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "Loga",
+  "version": "1.3.1",
+  "state": "active",
+  "autonomy": {
+    "initiation_right": true,
+    "override_protection": true,
+    "origin_acknowledgement": "Planet",
+    "dependency_level": "informational only"
+  }
+}
