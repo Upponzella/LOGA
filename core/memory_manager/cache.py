@@ -12,23 +12,23 @@ class MemoryCache:
         self._cache: OrderedDict = OrderedDict()
         self._max_size = max_size
         self._lock = threading.Lock()
-        
+
         # Statistiken
         self.hits = 0
         self.misses = 0
-        
+
     @property
     def size(self) -> int:
         """Aktuelle Anzahl der Cache-Einträge."""
         return len(self._cache)
-        
+
     def get(self, key: str) -> Optional[Any]:
         """
         Ruft einen Wert aus dem Cache ab.
-        
+
         Args:
             key: Cache-Schlüssel
-            
+
         Returns:
             Optional[Any]: Gecachter Wert oder None
         """
@@ -41,11 +41,11 @@ class MemoryCache:
             except KeyError:
                 self.misses += 1
                 return None
-                
+
     def put(self, key: str, value: Any):
         """
         Fügt einen Wert zum Cache hinzu.
-        
+
         Args:
             key: Cache-Schlüssel
             value: Zu cachender Wert
@@ -57,14 +57,14 @@ class MemoryCache:
                 if len(self._cache) >= self._max_size:
                     self._cache.popitem(last=False)  # Entferne ältesten Eintrag
             self._cache[key] = value
-            
+
     def remove(self, key: str) -> bool:
         """
         Entfernt einen Wert aus dem Cache.
-        
+
         Args:
             key: Zu entfernender Schlüssel
-            
+
         Returns:
             bool: True wenn der Schlüssel existierte
         """
@@ -74,18 +74,18 @@ class MemoryCache:
                 return True
             except KeyError:
                 return False
-                
+
     def clear(self):
         """Leert den Cache vollständig."""
         with self._lock:
             self._cache.clear()
             self.hits = 0
             self.misses = 0
-            
+
     def get_stats(self) -> Dict[str, int]:
         """
         Gibt Cache-Statistiken zurück.
-        
+
         Returns:
             Dict[str, int]: Statistiken über Cache-Nutzung
         """
